@@ -1,4 +1,4 @@
-# momo SDET Take-Home Assignment
+#Shop Detail API Contract Testing
 
 使用 Python、requests、pytest 與 Pydantic，對 momo 店鋪明細 API 進行 live API contract testing。
 
