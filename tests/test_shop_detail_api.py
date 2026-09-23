@@ -1,5 +1,7 @@
 """momo 店鋪明細 API 的 live pytest 測試。"""
 
+from copy import deepcopy
+
 import pytest
 
 from momo_api import VALID_ENTP_CODE, query_shop_detail
@@ -27,6 +29,21 @@ def test_success_response_matches_schema(valid_response: tuple[int, dict]) -> No
 
     assert parsed.success is True
     assert parsed.resultCode == "200"
+    assert parsed.data is not None
+
+
+def test_unknown_fields_do_not_break_schema(valid_response: tuple[int, dict]) -> None:
+    """API 新增未知欄位時，schema 仍應可驗證。"""
+    _, body = valid_response
+    changed_body = deepcopy(body)
+
+    changed_body["futureTopLevelField"] = "new value"
+    changed_body["data"]["shopDetailData"]["shopHeader"]["futureNestedField"] = {
+        "note": "new value"
+    }
+
+    parsed = ShopDetailResponse.model_validate(changed_body)
+
     assert parsed.data is not None
 
 

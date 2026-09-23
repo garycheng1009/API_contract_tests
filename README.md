@@ -34,7 +34,7 @@ python -m pytest -v
 ## 專案結構
 
 ```text
-momo_homework/
+API_contract_tests/
 ├── momo_api.py
 ├── schemas.py
 ├── requirements.txt
